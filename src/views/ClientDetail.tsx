@@ -16,7 +16,7 @@ export default function ClientDetail() {
   const navigate = useNavigate()
   const { data: customer, isLoading, error } = useCustomer(id ?? '')
   const { data: allCards } = useCards()
-  const linkedCards = (allCards ?? []).filter((c) => c.customerId === id && c.status === 'active')
+  const linkedCards = (allCards ?? []).filter((c) => c.customerId === id)
   const { data: operations } = useOperations({ customerId: id })
 
   if (isLoading) {

@@ -5,7 +5,7 @@ export function useCards() {
   return useQuery({
     queryKey: ['cards'],
     queryFn: ({ signal }) => cardsService.getAll(signal),
-    staleTime: 30_000,
+    staleTime: 0,
   })
 }
 
