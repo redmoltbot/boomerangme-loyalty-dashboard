@@ -43,8 +43,8 @@ export default function PhoneLookup() {
   const [query, setQuery] = useState('')
   const [phoneMode, setPhoneMode] = useState<PhoneMode>('existence')
 
-  const { loading, error, found, card, customer, isRateLimit, lookup, reset, dataLoading } = usePhoneLookup()
-  const { searchByName, searchByEmail, isLoading: searchLoading } = useCustomerSearch()
+  const { loading, error, found, card, customer, isRateLimit, lookup, reset, dataLoading, dataError } = usePhoneLookup()
+  const { searchByName, searchByEmail, isLoading: searchLoading, isError: searchError } = useCustomerSearch()
 
   // Live results for name/email tabs
   const textResults: Customer[] =
@@ -238,6 +238,14 @@ export default function PhoneLookup() {
         </p>
       </div>
 
+      {/* ── DATA LOAD ERROR ── */}
+      {dataError && searchType === 'phone' && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 18px', borderRadius: 12, background: 'rgba(155,44,58,0.07)', border: '1px solid rgba(155,44,58,0.15)' }}>
+          <XCircle size={18} style={{ color: 'var(--error)', flexShrink: 0 }} />
+          <span style={{ fontSize: 13, color: 'var(--error)' }}>Could not load data — please refresh the page to retry.</span>
+        </div>
+      )}
+
       {/* ── PHONE RESULTS ── */}
       {searchType === 'phone' && (
         <>
@@ -329,6 +337,13 @@ export default function PhoneLookup() {
       {/* ── NAME / EMAIL RESULTS ── */}
       {(searchType === 'name' || searchType === 'email') && (
         <>
+          {searchError && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 18px', borderRadius: 12, background: 'rgba(155,44,58,0.07)', border: '1px solid rgba(155,44,58,0.15)' }}>
+              <XCircle size={18} style={{ color: 'var(--error)', flexShrink: 0 }} />
+              <span style={{ fontSize: 13, color: 'var(--error)' }}>Could not load customers — please refresh the page to retry.</span>
+            </div>
+          )}
+
           {searchLoading && query.length >= 2 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <Skeleton height={14} width="40%" />
@@ -336,7 +351,7 @@ export default function PhoneLookup() {
             </div>
           )}
 
-          {!searchLoading && query.length >= 2 && textResults.length === 0 && (
+          {!searchLoading && !searchError && query.length >= 2 && textResults.length === 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderRadius: 12, background: 'rgba(155,44,58,0.07)', border: '1px solid rgba(155,44,58,0.15)' }}>
               <XCircle size={20} style={{ color: 'var(--error)', flexShrink: 0 }} />
               <div>

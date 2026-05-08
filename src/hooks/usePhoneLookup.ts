@@ -27,9 +27,10 @@ const INITIAL: LookupState = {
 }
 
 export function usePhoneLookup() {
-  const { data: allCustomers, isLoading: customersLoading } = useCustomers()
-  const { data: allCards, isLoading: cardsLoading } = useCards()
+  const { data: allCustomers, isLoading: customersLoading, isError: customersError } = useCustomers()
+  const { data: allCards, isLoading: cardsLoading, isError: cardsError } = useCards()
   const dataLoading = customersLoading || cardsLoading
+  const dataError = customersError || cardsError
 
   const [state, setState] = useState<LookupState>(INITIAL)
 
@@ -58,5 +59,5 @@ export function usePhoneLookup() {
     setState(INITIAL)
   }
 
-  return { ...state, lookup, reset, dataLoading }
+  return { ...state, lookup, reset, dataLoading, dataError }
 }

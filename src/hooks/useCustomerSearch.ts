@@ -2,7 +2,7 @@ import { useCustomers } from './useCustomers'
 import type { Customer } from '../types/boomerang'
 
 export function useCustomerSearch() {
-  const { data: allCustomers, isLoading } = useCustomers()
+  const { data: allCustomers, isLoading, isError } = useCustomers()
 
   function searchByName(query: string): Customer[] {
     const q = query.trim().toLowerCase()
@@ -23,5 +23,5 @@ export function useCustomerSearch() {
     return allCustomers.filter((c) => c.email?.toLowerCase().includes(q))
   }
 
-  return { searchByName, searchByEmail, isLoading }
+  return { searchByName, searchByEmail, isLoading, isError }
 }

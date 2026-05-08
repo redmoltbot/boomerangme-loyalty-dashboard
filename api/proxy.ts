@@ -75,6 +75,11 @@ function applyTransform(path: string, payload: unknown): unknown {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const boomerangPath = req.query.boomerangPath as string
 
+  if (!boomerangPath) {
+    res.status(400).json({ error: 'Missing boomerangPath' })
+    return
+  }
+
   const qs = new URLSearchParams()
   for (const [key, value] of Object.entries(req.query)) {
     if (key === 'boomerangPath') continue
@@ -83,14 +88,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const qsStr = qs.toString() ? `?${qs.toString()}` : ''
 
-  const upstream = await fetch(`${BASE_URL}/api/${boomerangPath}${qsStr}`, {
-    method: req.method ?? 'GET',
-    headers: {
-      'X-Api-Key': API_KEY,
-      'Content-Type': 'application/json',
-    },
-    body: req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body) : undefined,
-  })
+  let upstream: Response
+  try {
+    upstream = await fetch(`${BASE_URL}/api/${boomerangPath}${qsStr}`, {
+      method: req.method ?? 'GET',
+      headers: {
+        'X-Api-Key': API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body) : undefined,
+    })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Network error'
+    res.status(502).json({ error: `Upstream unreachable: ${msg}` })
+    return
+  }
 
   let json: unknown
   try {

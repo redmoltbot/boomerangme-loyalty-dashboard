@@ -11,7 +11,11 @@ export default function PinLock({ onUnlock }: PinLockProps) {
   const [digits, setDigits] = useState<string[]>(Array(PIN_LENGTH).fill(''))
   const [shake, setShake] = useState(false)
   const [error, setError] = useState(false)
-  const refs = Array.from({ length: PIN_LENGTH }, () => useRef<HTMLInputElement>(null))
+  const ref0 = useRef<HTMLInputElement>(null)
+  const ref1 = useRef<HTMLInputElement>(null)
+  const ref2 = useRef<HTMLInputElement>(null)
+  const ref3 = useRef<HTMLInputElement>(null)
+  const refs = [ref0, ref1, ref2, ref3]
 
   useEffect(() => {
     refs[0].current?.focus()
