@@ -19,7 +19,7 @@ export default function CardDetail() {
   const { data: operations } = useOperations({ cardNumber })
   const { add: addStamp, subtract: subtractStamp } = useStampActions(cardNumber ?? '')
 
-  const [stampCount, setStampCount] = useState(1)
+  const [stampCount, setStampCount] = useState('1')
   const [stampComment, setStampComment] = useState('')
   const [purchaseSum, setPurchaseSum] = useState('')
   const [stampFeedback, setStampFeedback] = useState<{ type: 'success' | 'error'; msg: string } | null>(null)
@@ -27,7 +27,7 @@ export default function CardDetail() {
   async function handleStampAction(action: 'add' | 'subtract') {
     setStampFeedback(null)
     const body = {
-      stamps: stampCount,
+      stamps: Math.max(1, parseInt(stampCount) || 1),
       comment: stampComment || null,
       purchaseSum: purchaseSum !== '' ? parseFloat(purchaseSum) : null,
     }
@@ -35,7 +35,7 @@ export default function CardDetail() {
       if (action === 'add') await addStamp.mutateAsync(body)
       else await subtractStamp.mutateAsync(body)
       setStampFeedback({ type: 'success', msg: action === 'add' ? `Added ${stampCount} stamp(s)` : `Subtracted ${stampCount} stamp(s)` })
-      setStampCount(1)
+      setStampCount('1')
       setStampComment('')
       setPurchaseSum('')
     } catch (e: unknown) {
@@ -142,10 +142,11 @@ export default function CardDetail() {
                 <div>
                   <div style={inputLabelStyle}>Stamps *</div>
                   <input
-                    type="number"
-                    min={1}
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="1"
                     value={stampCount}
-                    onChange={(e) => setStampCount(Math.max(1, parseInt(e.target.value) || 1))}
+                    onChange={(e) => setStampCount(e.target.value.replace(/[^0-9]/g, ''))}
                     style={{ ...inputStyle, width: 72 }}
                   />
                 </div>
