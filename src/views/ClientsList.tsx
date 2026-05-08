@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Search, Users } from 'lucide-react'
 import { useCustomers } from '../hooks/useCustomers'
+import { useCards } from '../hooks/useCards'
 import { DataTable } from '../components/ui/DataTable'
 import { TableSkeleton } from '../components/ui/SkeletonLoader'
 import { EmptyState, ErrorState } from '../components/ui/EmptyState'
@@ -14,6 +15,10 @@ const PAGE_SIZE = 20
 export default function ClientsList() {
   const navigate = useNavigate()
   const { data: customers, isLoading, error, refetch } = useCustomers()
+  const { data: cards } = useCards()
+  const cardByCustomer = new Map(
+    (cards ?? []).filter((c) => c.customerId).map((c) => [c.customerId!, c.number])
+  )
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
 
@@ -61,7 +66,7 @@ export default function ClientsList() {
       key: 'cardNumber',
       label: 'Serial Card Num',
       render: (c: Customer) => {
-        const num = c.cards?.[0]?.number
+        const num = cardByCustomer.get(c.id)
         return num ? <CopyField value={num} /> : <span style={{ color: 'var(--text-faint)' }}>—</span>
       },
     },
