@@ -337,10 +337,10 @@ export default function CardDetail() {
           <SectionHeader icon={<User size={15} />} title="Cardholder" />
           <div
             style={{ ...cardStyle, cursor: 'pointer', marginTop: 10 }}
-            onClick={() => navigate(`/clients/${card.customer!.id}`)}
+            onClick={() => navigate(`/customers/${card.customer!.id}`)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && navigate(`/clients/${card.customer!.id}`)}
+            onKeyDown={(e) => e.key === 'Enter' && navigate(`/customers/${card.customer!.id}`)}
             onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--surface-2)')}
             onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--surface)')}
           >

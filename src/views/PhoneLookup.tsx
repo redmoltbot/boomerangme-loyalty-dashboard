@@ -320,7 +320,7 @@ export default function PhoneLookup() {
                 <CheckCircle size={16} style={{ color: 'var(--success)', flexShrink: 0 }} />
                 <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--success)' }}>Customer found</span>
               </div>
-              <CustomerResultCard customer={customer} onView={() => navigate(`/clients/${customer.id}`)} />
+              <CustomerResultCard customer={customer} onView={() => navigate(`/customers/${customer.id}`)} />
             </div>
           )}
         </>
@@ -357,7 +357,7 @@ export default function PhoneLookup() {
                 <CustomerResultCard
                   key={c.id}
                   customer={c}
-                  onView={() => navigate(`/clients/${c.id}`)}
+                  onView={() => navigate(`/customers/${c.id}`)}
                 />
               ))}
               {textResults.length > 10 && (

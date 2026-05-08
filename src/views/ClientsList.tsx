@@ -58,6 +58,14 @@ export default function ClientsList() {
         c.phone ? <CopyField value={c.phone} /> : <span style={{ color: 'var(--text-faint)' }}>—</span>,
     },
     {
+      key: 'cardNumber',
+      label: 'Serial Card Num',
+      render: (c: Customer) => {
+        const num = c.cards?.[0]?.number
+        return num ? <CopyField value={num} /> : <span style={{ color: 'var(--text-faint)' }}>—</span>
+      },
+    },
+    {
       key: 'id',
       label: 'Customer ID',
       render: (c: Customer) => <CopyField value={c.id} />,
@@ -132,7 +140,7 @@ export default function ClientsList() {
             columns={columns}
             data={paged}
             keyFn={(c) => c.id}
-            onRowClick={(c) => navigate(`/clients/${c.id}`)}
+            onRowClick={(c) => navigate(`/customers/${c.id}`)}
             emptyState={
               <EmptyState
                 icon={<Users size={22} />}

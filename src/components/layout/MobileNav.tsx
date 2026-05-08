@@ -3,7 +3,7 @@ import { LayoutDashboard, Users, CreditCard, Search } from 'lucide-react'
 
 const nav = [
   { to: '/', icon: LayoutDashboard, label: 'Overview' },
-  { to: '/clients', icon: Users, label: 'Customers' },
+  { to: '/customers', icon: Users, label: 'Customers' },
   { to: '/cards', icon: CreditCard, label: 'Cards' },
   { to: '/lookup', icon: Search, label: 'Lookup' },
 ]

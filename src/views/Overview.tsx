@@ -125,7 +125,7 @@ export default function Overview() {
               <button
                 key={i}
                 onClick={() => {
-                  navigate(r.type === 'Customer' ? `/clients/${r.id}` : `/cards/${r.id}`)
+                  navigate(r.type === 'Customer' ? `/customers/${r.id}` : `/cards/${r.id}`)
                   setSearch('')
                 }}
                 style={{
@@ -238,7 +238,7 @@ export default function Overview() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {[
             { label: 'Phone Lookup', icon: Phone, to: '/lookup' },
-            { label: 'All Customers', icon: Users, to: '/clients' },
+            { label: 'All Customers', icon: Users, to: '/customers' },
             { label: 'All Cards', icon: CreditCard, to: '/cards' },
           ].map(({ label, icon: Icon, to }) => (
             <button

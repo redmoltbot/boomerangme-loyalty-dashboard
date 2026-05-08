@@ -28,8 +28,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<AppShell />}>
             <Route index element={<Overview />} />
-            <Route path="clients" element={<ClientsList />} />
-            <Route path="clients/:id" element={<ClientDetail />} />
+            <Route path="customers" element={<ClientsList />} />
+            <Route path="customers/:id" element={<ClientDetail />} />
             <Route path="cards" element={<CardsList />} />
             <Route path="cards/:cardNumber" element={<CardDetail />} />
             <Route path="lookup" element={<PhoneLookup />} />

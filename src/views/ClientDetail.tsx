@@ -30,7 +30,7 @@ export default function ClientDetail() {
   if (error || !customer) {
     return (
       <div style={{ maxWidth: 720 }}>
-        <button onClick={() => navigate('/clients')} style={backBtnStyle}>
+        <button onClick={() => navigate('/customers')} style={backBtnStyle}>
           <ArrowLeft size={15} /> Back to Customers
         </button>
         <div style={{ marginTop: 24, textAlign: 'center', color: 'var(--error)' }}>Customer not found.</div>
@@ -44,7 +44,7 @@ export default function ClientDetail() {
 
   return (
     <div style={{ maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 22 }}>
-      <button onClick={() => navigate('/clients')} style={backBtnStyle}>
+      <button onClick={() => navigate('/customers')} style={backBtnStyle}>
         <ArrowLeft size={15} /> Back to Customers
       </button>
 
