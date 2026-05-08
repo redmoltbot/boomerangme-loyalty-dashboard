@@ -17,7 +17,7 @@ export default function ClientsList() {
   const { data: customers, isLoading, error, refetch } = useCustomers()
   const { data: cards } = useCards()
   const cardByCustomer = new Map(
-    (cards ?? []).filter((c) => c.customerId).map((c) => [c.customerId!, c.number])
+    (cards ?? []).filter((c) => c.customerId && c.status === 'active').map((c) => [c.customerId!, c.number])
   )
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)

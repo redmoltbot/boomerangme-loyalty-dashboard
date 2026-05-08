@@ -19,7 +19,9 @@ export default function CardsList() {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
 
-  const filtered = (cards ?? []).filter((c) => {
+  const activeCards = (cards ?? []).filter((c) => c.status === 'active')
+
+  const filtered = activeCards.filter((c) => {
     if (!search.trim()) return true
     const q = search.toLowerCase()
     return c.number.toLowerCase().includes(q) || c.customerId?.toLowerCase().includes(q) || String(c.templateId).includes(q)
@@ -73,7 +75,7 @@ export default function CardsList() {
           <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>Cards</h1>
           {cards && (
             <p style={{ margin: '2px 0 0', fontSize: 13, color: 'var(--text-muted)' }}>
-              {cards.length} total · {filtered.length} shown
+              {activeCards.length} active · {filtered.length} shown
             </p>
           )}
         </div>
