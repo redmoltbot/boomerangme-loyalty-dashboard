@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, CreditCard, Stamp, Search, Phone, ArrowRight } from 'lucide-react'
+import { Users, CreditCard, Search, Phone, ArrowRight } from 'lucide-react'
 import { useCustomers } from '../hooks/useCustomers'
 import { useCards } from '../hooks/useCards'
 import { StatCard } from '../components/ui/StatCard'
@@ -157,15 +157,6 @@ export default function Overview() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 14 }}>
         {cLoading ? <StatCardSkeleton /> : <StatCard label="Total Customers" value={customers?.length ?? 0} icon={<Users size={17} />} />}
         {kLoading ? <StatCardSkeleton /> : <StatCard label="Total Cards" value={cards?.length ?? 0} icon={<CreditCard size={17} />} />}
-        {kLoading ? <StatCardSkeleton /> : (
-          <StatCard
-            label="Stamp Card Holders"
-            value={primaryHolders.length}
-            icon={<Stamp size={17} />}
-            accent
-            sub={`Card #${BOOMERANG_CONFIG.primaryCardId}`}
-          />
-        )}
       </div>
 
       {/* Stamp card highlight */}

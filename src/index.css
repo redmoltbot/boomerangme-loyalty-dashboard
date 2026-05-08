@@ -50,14 +50,14 @@
 }
 
 html.dark {
-  --bg: #1a1510;
-  --surface: #221c14;
-  --surface-2: #2c2418;
-  --surface-offset: #382f1e;
-  --bdr: rgba(240, 220, 180, 0.08);
+  --bg: #2a2215;
+  --surface: #352a1a;
+  --surface-2: #3e3120;
+  --surface-offset: #4a3c28;
+  --bdr: rgba(240, 220, 180, 0.12);
   --text: #f0e8d8;
-  --text-muted: #b5a48e;
-  --text-faint: #7a6a55;
+  --text-muted: #c0a888;
+  --text-faint: #8a7a65;
   --primary: #c87a3e;
   --primary-hover: #e89050;
   --accent: #e8b030;

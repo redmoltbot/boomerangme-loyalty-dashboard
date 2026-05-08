@@ -71,11 +71,6 @@ export default function ClientsList() {
       },
     },
     {
-      key: 'id',
-      label: 'Customer ID',
-      render: (c: Customer) => <CopyField value={c.id} />,
-    },
-    {
       key: 'dob',
       label: 'Date of Birth',
       render: (c: Customer) =>
