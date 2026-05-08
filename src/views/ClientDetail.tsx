@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, CreditCard, Activity, Tag } from 'lucide-react'
 import { useCustomer } from '../hooks/useCustomers'
+import { useCards } from '../hooks/useCards'
 import { useOperations } from '../hooks/useOperations'
 import { CopyField } from '../components/ui/CopyField'
 import { StatusBadge, CardTypeBadge } from '../components/ui/StatusBadge'
-import { StampBar } from '../components/ui/StampProgress'
+import { StampProgress } from '../components/ui/StampProgress'
 import { Skeleton } from '../components/ui/SkeletonLoader'
 import { EmptyState } from '../components/ui/EmptyState'
 import { formatDate, timeAgo } from '../utils/formatDate'
@@ -14,6 +15,8 @@ export default function ClientDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { data: customer, isLoading, error } = useCustomer(id ?? '')
+  const { data: allCards } = useCards()
+  const linkedCards = (allCards ?? []).filter((c) => c.customerId === id)
   const { data: operations } = useOperations({ customerId: id })
 
   if (isLoading) {
@@ -107,7 +110,7 @@ export default function ClientDetail() {
       {/* Cards */}
       <section>
         <SectionHeader icon={<CreditCard size={15} />} title="Linked Cards" />
-        {!customer.cards || customer.cards.length === 0 ? (
+        {linkedCards.length === 0 ? (
           <EmptyState
             icon={<CreditCard size={20} />}
             title="No linked cards"
@@ -115,7 +118,7 @@ export default function ClientDetail() {
           />
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}>
-            {customer.cards.map((card) => (
+            {linkedCards.map((card) => (
               <div
                 key={card.id}
                 onClick={() => navigate(`/cards/${card.number}`)}
@@ -126,14 +129,30 @@ export default function ClientDetail() {
                 onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--surface-2)')}
                 onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--surface)')}
               >
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, flexWrap: 'wrap' }}>
                     <CopyField value={card.number} />
                     <CardTypeBadge cardType={card.cardType} />
                     <StatusBadge status={card.status} />
                   </div>
+                  {card.cardType === 0 ? (
+                    <div style={{ background: 'var(--surface-2)', borderRadius: 10, padding: '14px 16px' }}>
+                      <StampProgress stamps={card.stamps ?? 0} maxStamps={card.maxStamps ?? 10} size="sm" />
+                      <div style={{ display: 'flex', gap: 20, marginTop: 12, flexWrap: 'wrap' }}>
+                        <Metric label="Stamps" value={`${card.stamps ?? 0} / ${card.maxStamps ?? 10}`} color="var(--accent)" />
+                        <Metric label="Rewards" value={String(card.rewards ?? 0)} color="var(--success)" />
+                        {card.visits != null && <Metric label="Visits" value={String(card.visits)} color="var(--primary)" />}
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+                      {card.points != null && <Metric label="Points" value={String(card.points)} color="var(--accent)" />}
+                      {card.amount != null && <Metric label="Amount" value={`SGD ${card.amount.toFixed(2)}`} color="var(--success)" />}
+                      {card.scores != null && <Metric label="Scores" value={String(card.scores)} color="var(--primary)" />}
+                      {card.visits != null && <Metric label="Visits" value={String(card.visits)} color="var(--herb)" />}
+                    </div>
+                  )}
                 </div>
-                {card.cardType === 0 && <StampBar stamps={card.stamps ?? 0} maxStamps={card.maxStamps ?? 10} />}
               </div>
             ))}
           </div>
@@ -187,6 +206,15 @@ export default function ClientDetail() {
           </div>
         )}
       </section>
+    </div>
+  )
+}
+
+function Metric({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div>
+      <div style={{ fontSize: 11, color: 'var(--text-faint)' }}>{label}</div>
+      <div style={{ fontWeight: 700, fontSize: 18, color, fontVariantNumeric: 'tabular-nums', lineHeight: 1.2 }}>{value}</div>
     </div>
   )
 }
