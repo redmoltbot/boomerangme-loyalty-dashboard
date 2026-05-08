@@ -7,6 +7,7 @@ import ClientDetail from './views/ClientDetail'
 import CardsList from './views/CardsList'
 import CardDetail from './views/CardDetail'
 import PhoneLookup from './views/PhoneLookup'
+import AIAgent from './views/AIAgent'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="cards" element={<CardsList />} />
             <Route path="cards/:cardNumber" element={<CardDetail />} />
             <Route path="lookup" element={<PhoneLookup />} />
+            <Route path="ai-agent" element={<AIAgent />} />
           </Route>
         </Routes>
       </BrowserRouter>

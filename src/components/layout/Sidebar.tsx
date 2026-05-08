@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Users, CreditCard, Search, Sun, Moon } from 'lucide-react'
+import { LayoutDashboard, Users, CreditCard, Search, Bot, Sun, Moon } from 'lucide-react'
 import { ApiHealthIndicator } from '../ui/ApiHealthIndicator'
 import { BOOMERANG_CONFIG } from '../../config/boomerang'
 
@@ -13,6 +13,7 @@ const nav = [
   { to: '/customers', icon: Users, label: 'Customers' },
   { to: '/cards', icon: CreditCard, label: 'Cards' },
   { to: '/lookup', icon: Search, label: 'Lookup' },
+  { to: '/ai-agent', icon: Bot, label: 'AI Agent' },
 ]
 
 const linkBase: React.CSSProperties = {

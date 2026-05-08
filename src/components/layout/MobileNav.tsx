@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Users, CreditCard, Search } from 'lucide-react'
+import { LayoutDashboard, Users, CreditCard, Search, Bot } from 'lucide-react'
 
 const nav = [
   { to: '/', icon: LayoutDashboard, label: 'Overview' },
   { to: '/customers', icon: Users, label: 'Customers' },
   { to: '/cards', icon: CreditCard, label: 'Cards' },
   { to: '/lookup', icon: Search, label: 'Lookup' },
+  { to: '/ai-agent', icon: Bot, label: 'AI Agent' },
 ]
 
 export function MobileNav() {

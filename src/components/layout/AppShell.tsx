@@ -9,6 +9,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/customers': 'Customers',
   '/cards': 'Cards',
   '/lookup': 'Lookup',
+  '/ai-agent': 'AI Agent',
 }
 
 export default function AppShell() {
