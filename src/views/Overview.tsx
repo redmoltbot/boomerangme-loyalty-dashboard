@@ -40,7 +40,6 @@ export default function Overview() {
   const searchRef = useRef<HTMLInputElement>(null)
 
   const primaryCard = cards?.find((c) => String(c.templateId) === BOOMERANG_CONFIG.primaryCardId)
-  const primaryHolders = cards?.filter((c) => String(c.templateId) === BOOMERANG_CONFIG.primaryCardId) ?? []
 
   const doSearch = debounce((q: string) => {
     if (!q.trim()) { setSearchResults([]); return }
